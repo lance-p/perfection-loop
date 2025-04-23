@@ -1538,13 +1538,6 @@ input, select, textarea {
 		margin: 0 0 1.5em 0;
 	}
 
-	pre.boom {
-			font-style: normal;
-			font-weight: normal;
-			font-family: "Droid Sans Mono", "Lucida Console", "Andale Mono", "Courier New", "Courier", monospace;
-			font-size: 12px;
-			line-height: 15px;
-	}
 
 		header > p {
 			display: block;
