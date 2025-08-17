@@ -1,0 +1,441 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfection Loop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- body -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <!-- tag -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Qwitcher+Grypen:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: "Lato", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .main {
+      color: #999;
+      display: flex;
+      justify-content: center;
+      /* Centers horizontally */
+      align-items: center;
+      /* Centers vertically */
+      min-height: 96vh;
+      /* Ensures main takes full viewport height */
+    }
+
+    .main img {
+      width: 602px;
+    }
+
+    h1 {
+      font-weight: normal;
+      color: #999;
+      font-family: "Qwitcher Grypen", cursive;
+      font-weight: 400;
+      font-size: 76px;
+      font-style: normal;
+      margin-top: 0.5em;
+      font-size: 4rem;
+      color: #fff;
+      text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+      }
+
+      100% {
+        text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
+      }
+    }
+
+    .info {
+      color: #999;
+      font-size: 80%;
+    }
+
+    button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+      width: 40px;
+      height: 40px;
+      float: left;
+    }
+
+    #audio-player-container {
+      --seek-before-width: 0%;
+      --volume-before-width: 100%;
+      --buffered-width: 0%;
+      position: relative;
+      margin: 100px 2.5% auto 2.5%;
+      width: 95%;
+      max-width: 500px;
+      height: 132px;
+      background: #fff;
+    }
+
+    #audio-player-container::before {
+      position: absolute;
+      content: '';
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      left: -2px;
+      top: -2px;
+      background: linear-gradient(to left, #007db5, #ff8a00);
+      z-index: -1;
+    }
+
+    #audio-player-container p {
+      position: absolute;
+      top: -18px;
+      right: 5%;
+      padding: 0 5px;
+      margin: 0;
+      font-size: 28px;
+      background: #fff;
+    }
+
+    #play-icon {
+      margin: 20px 2.5% 10px 2.5%;
+    }
+
+    path {
+      stroke: #007db5;
+    }
+
+    .time {
+      display: inline-block;
+      width: 37px;
+      text-align: center;
+      font-size: 20px;
+      margin: 28.5px 0 18.5px 0;
+      float: left;
+    }
+
+    output {
+      display: inline-block;
+      width: 32px;
+      text-align: center;
+      font-size: 20px;
+      margin: 10px 2.5% 0 5%;
+      float: left;
+      clear: left;
+    }
+
+    #volume-slider {
+      margin: 10px 2.5%;
+      width: 58%;
+    }
+
+    #volume-slider::-webkit-slider-runnable-track {
+      background: rgba(0, 125, 181, 0.6);
+    }
+
+    #volume-slider::-moz-range-track {
+      background: rgba(0, 125, 181, 0.6);
+    }
+
+    #volume-slider::-ms-fill-upper {
+      background: rgba(0, 125, 181, 0.6);
+    }
+
+    #volume-slider::before {
+      width: var(--volume-before-width);
+    }
+
+    #mute-icon {
+      margin: 0 2.5%;
+    }
+
+    input[type="range"] {
+      position: relative;
+      -webkit-appearance: none;
+      width: 48%;
+      margin: 0;
+      padding: 0;
+      height: 19px;
+      margin: 30px 2.5% 20px 2.5%;
+      float: left;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 3px;
+      cursor: pointer;
+      background: linear-gradient(to right, rgba(0, 125, 181, 0.6) var(--buffered-width), rgba(0, 125, 181, 0.2) var(--buffered-width));
+    }
+
+    input[type="range"]::before {
+      position: absolute;
+      content: "";
+      top: 8px;
+      left: 0;
+      width: var(--seek-before-width);
+      height: 3px;
+      background-color: #007db5;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      position: relative;
+      -webkit-appearance: none;
+      box-sizing: content-box;
+      border: 1px solid #007db5;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+      margin: -7px 0 0 0;
+    }
+
+    input[type="range"]:active::-webkit-slider-thumb {
+      transform: scale(1.2);
+      background: #007db5;
+    }
+
+    input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 3px;
+      cursor: pointer;
+      background: linear-gradient(to right, rgba(0, 125, 181, 0.6) var(--buffered-width), rgba(0, 125, 181, 0.2) var(--buffered-width));
+    }
+
+    input[type="range"]::-moz-range-progress {
+      background-color: #007db5;
+    }
+
+    input[type="range"]::-moz-focus-outer {
+      border: 0;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      box-sizing: content-box;
+      border: 1px solid #007db5;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="range"]:active::-moz-range-thumb {
+      transform: scale(1.2);
+      background: #007db5;
+    }
+
+    input[type="range"]::-ms-track {
+      width: 100%;
+      height: 3px;
+      cursor: pointer;
+      background: transparent;
+      border: solid transparent;
+      color: transparent;
+    }
+
+    input[type="range"]::-ms-fill-lower {
+      background-color: #007db5;
+    }
+
+    input[type="range"]::-ms-fill-upper {
+      background: linear-gradient(to right, rgba(0, 125, 181, 0.6) var(--buffered-width), rgba(0, 125, 181, 0.2) var(--buffered-width));
+    }
+
+    input[type="range"]::-ms-thumb {
+      box-sizing: content-box;
+      border: 1px solid #007db5;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="range"]:active::-ms-thumb {
+      transform: scale(1.2);
+      background: #007db5;
+    }
+  </style> \
+</head>
+<body>
+  <div class="main">
+    <div>
+      <img src="images/perfectionloop.png">
+      <h1 class="neon-text">Expeditions with panache</h1>
+      <div id="audio-player-container">
+        <audio-player data-src="https://assets.codepen.io/4358584/Anitek_-_Komorebi.mp3"></audio-player>
+        <p>audio player ish</p>
+        <button id="play-icon"></button>
+        <span id="current-time" class="time">0:00</span>
+        <input type="range" id="seek-slider" max="100" value="0">
+        <span id="duration" class="time">0:00</span>
+        <output id="volume-output">100</output>
+        <input type="range" id="volume-slider" max="100" value="100">
+        <button id="mute-icon"></button>
+      </div>
+    </div>
+  </div>
+  <div class="info">Perfection Loop does not solicit, offer, or sell advisory services via the Internet ʕっ• ᴥ • ʔっ
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+  <script>
+
+    const lottieWeb = bodymovin;
+    const playIconContainer = document.getElementById('play-icon');
+    const audioPlayerContainer = document.getElementById('audio-player-container');
+    const seekSlider = document.getElementById('seek-slider');
+    const volumeSlider = document.getElementById('volume-slider');
+    const muteIconContainer = document.getElementById('mute-icon');
+    let playState = 'play';
+    let muteState = 'unmute';
+
+    const playAnimation = lottieWeb.loadAnimation({
+      container: playIconContainer,
+      path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/pause/pause.json',
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      name: "Play Animation",
+    });
+
+    const muteAnimation = lottieWeb.loadAnimation({
+      container: muteIconContainer,
+      path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/mute/mute.json',
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      name: "Mute Animation",
+    });
+
+    playAnimation.goToAndStop(14, true);
+
+    playIconContainer.addEventListener('click', () => {
+      if (playState === 'play') {
+        audio.play();
+        playAnimation.playSegments([14, 27], true);
+        requestAnimationFrame(whilePlaying);
+        playState = 'pause';
+      } else {
+        audio.pause();
+        playAnimation.playSegments([0, 14], true);
+        cancelAnimationFrame(raf);
+        playState = 'play';
+      }
+    });
+
+    muteIconContainer.addEventListener('click', () => {
+      if (muteState === 'unmute') {
+        muteAnimation.playSegments([0, 15], true);
+        audio.muted = true;
+        muteState = 'mute';
+      } else {
+        muteAnimation.playSegments([15, 25], true);
+        audio.muted = false;
+        muteState = 'unmute';
+      }
+    });
+
+    const showRangeProgress = (rangeInput) => {
+      if (rangeInput === seekSlider) audioPlayerContainer.style.setProperty('--seek-before-width', rangeInput.value / rangeInput.max * 100 + '%');
+      else audioPlayerContainer.style.setProperty('--volume-before-width', rangeInput.value / rangeInput.max * 100 + '%');
+    }
+
+    seekSlider.addEventListener('input', (e) => {
+      showRangeProgress(e.target);
+    });
+    volumeSlider.addEventListener('input', (e) => {
+      showRangeProgress(e.target);
+    });
+
+
+
+
+
+    /** Implementation of the functionality of the audio player */
+
+    const audio = document.querySelector('audio');
+    const durationContainer = document.getElementById('duration');
+    const currentTimeContainer = document.getElementById('current-time');
+    const outputContainer = document.getElementById('volume-output');
+    let raf = null;
+
+    const calculateTime = (secs) => {
+      const minutes = Math.floor(secs / 60);
+      const seconds = Math.floor(secs % 60);
+      const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${minutes}:${returnedSeconds}`;
+    }
+
+    const displayDuration = () => {
+      durationContainer.textContent = calculateTime(audio.duration);
+    }
+
+    const setSliderMax = () => {
+      seekSlider.max = Math.floor(audio.duration);
+    }
+
+    const displayBufferedAmount = () => {
+      const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
+      audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
+    }
+
+    const whilePlaying = () => {
+      seekSlider.value = Math.floor(audio.currentTime);
+      currentTimeContainer.textContent = calculateTime(seekSlider.value);
+      audioPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`);
+      raf = requestAnimationFrame(whilePlaying);
+    }
+
+    if (audio && audio.readyState) {
+      displayDuration();
+      setSliderMax();
+      displayBufferedAmount();
+    } else {
+      audio.addEventListener('loadedmetadata', () => {
+        displayDuration();
+        setSliderMax();
+        displayBufferedAmount();
+      });
+    }
+
+    audio.addEventListener('progress', displayBufferedAmount);
+
+    seekSlider.addEventListener('input', () => {
+      currentTimeContainer.textContent = calculateTime(seekSlider.value);
+      if (!audio.paused) {
+        cancelAnimationFrame(raf);
+      }
+    });
+
+    seekSlider.addEventListener('change', () => {
+      audio.currentTime = seekSlider.value;
+      if (!audio.paused) {
+        requestAnimationFrame(whilePlaying);
+      }
+    });
+
+    volumeSlider.addEventListener('input', (e) => {
+      const value = e.target.value;
+
+      outputContainer.textContent = value;
+      audio.volume = value / 100;
+    });
+  </script>
+</body>
+</html>

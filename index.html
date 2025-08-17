@@ -3,78 +3,40 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Perfection Loop</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<!-- body -->
-	<link
-		href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-		rel="stylesheet">
-	<!-- tag -->
-	<link
-		href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Qwitcher+Grypen:wght@400;700&display=swap"
-		rel="stylesheet">
-	<style>
-		body {
-			font-family: "Lato", sans-serif;
-			font-weight: 400;
-			font-style: normal;
-			overflow: hidden;
-			text-align: center;
-		}
-
-		.main {
-			color: #999;
-			display: flex;
-			justify-content: center;
-			/* Centers horizontally */
-			align-items: center;
-			/* Centers vertically */
-			min-height: 96vh;
-			/* Ensures main takes full viewport height */
-		}
-
-		.main img {
-			width: 602px;
-		}
-
-		h1 {
-			font-weight: normal;
-			color: #999;
-			font-family: "Qwitcher Grypen", cursive;
-			font-weight: 400;
-			font-size: 76px;
-			font-style: normal;
-			margin-top: 0.5em;
-			font-size: 4rem;
-			color: #fff;
-			text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
-			animation: glow 1.5s infinite alternate;
-		}
-
-		@keyframes glow {
-			0% {
-				text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
-			}
-
-			100% {
-				text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
-			}
-		}
-
-		.info {
-			color: #999;
-			font-size: 80%;
-		}
-	</style>
+	<link href="assets/css/main.css" rel="stylesheet">
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- body -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+	rel="stylesheet">
+<!-- tag -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Qwitcher+Grypen:wght@400;700&display=swap"
+	rel="stylesheet">
 </head>
 <body>
 	<div class="main">
 		<div>
 			<img src="images/perfectionloop.png">
 			<h1 class="neon-text">Expeditions with panache</h1>
+			<div id="audio-player-container">
+				<audio src="assets/audio/ic-instra-trim.mp3" preload="metadata" loop></audio>
+				<p></p>
+				<button id="play-icon"></button>
+				<span id="current-time" class="time">0:00</span>
+				<input type="range" id="seek-slider" max="100" value="0">
+				<span id="duration" class="time">0:00</span>
+				<output id="volume-output">100</output>
+				<input type="range" id="volume-slider" max="100" value="100">
+				<button id="mute-icon"></button>
+			</div>
 		</div>
 	</div>
 	<div class="info">Perfection Loop does not solicit, offer, or sell advisory services via the Internet ʕっ• ᴥ • ʔっ
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+	<script src="assets/js/audioplayer.js"></script>
 </body>
 </html>
